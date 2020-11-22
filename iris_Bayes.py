@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[14]:
+# In[1]:
 
 
 import numpy as np
@@ -9,7 +9,24 @@ import pandas as pd
 import sklearn.naive_bayes
 
 
-# In[19]:
+# In[2]:
+
+
+from sklearn.naive_bayes import GaussianNB
+
+
+# In[3]:
+
+
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import confusion_matrix, zero_one_loss
+from sklearn.metrics import classification_report
+
+
+# In[4]:
 
 
 training=pd.read_csv('https://raw.githubusercontent.com/selva86/datasets/master/iris_train.csv')
@@ -17,22 +34,7 @@ testing=pd.read_csv('https://raw.githubusercontent.com/selva86/datasets/master/i
 training
 
 
-# In[24]:
-
-
-from sklearn.naive_bayes import GaussianNB
-
-
-# In[29]:
-
-
-trainData = pd.DataFrame.values(training[['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']])
-trainTarget = pd.DataFrame.values(training[['Species']]).ravel()
-testData = pd.DataFrame.values(testing[['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']])
-testTarget = pd.DataFrame.values(testing[['Species']]).ravel()
-
-
-# In[55]:
+# In[5]:
 
 
 trainData =pd.DataFrame(training[['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']]).values
@@ -41,14 +43,14 @@ testData = pd.DataFrame(testing[['Sepal.Length', 'Sepal.Width', 'Petal.Length', 
 testTarget = pd.DataFrame(testing[['Species']]).values.ravel()
 
 
-# In[56]:
+# In[6]:
 
 
 classifier = GaussianNB()
 classifier.fit(trainData, trainTarget)
 
 
-# In[58]:
+# In[7]:
 
 
 predictedValues = classifier.predict(testData)
@@ -58,20 +60,16 @@ accuracy = 1.0 - nErrors / testTarget.shape[0]
 print("Accuracy: ", accuracy)
 
 
-# In[63]:
+# In[8]:
 
 
 results_nm = confusion_matrix(testTarget,predictedValues)
 results_nm
 
 
-# In[60]:
+# In[9]:
 
 
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
-from sklearn.metrics import confusion_matrix, zero_one_loss
-from sklearn.metrics import classification_report
+results = classification_report(testTarget,predictedValues)
+results
 
